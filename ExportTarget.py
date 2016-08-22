@@ -1,12 +1,24 @@
+#! python2.7
+#see video https://www.udemy.com/automate/learn/v4/t/lecture/3470590
+#https://www.udemy.com/automate/learn/v4/t/lecture/3470614
+
 
 from selenium import webdriver
 import urllib
-
 import re
+import sys
+
+# usage: Ctrl+R then input ExportTarget 534666
+sys.argv
+if len(sys.argv) > 1:
+    userinputID=sys.argv[1]
+else:
+    print("Ctrl+R then input ExportTarget <000000>")
 #open by projectID
+
 browser = webdriver.Firefox()
 baseURL="http://worldserver9.amazon.com/ws/assignments_tasks?&token=1416441266&project="
-projectID="543951"
+projectID=userinputID
 url=baseURL+projectID
 browser.get(url)
 #login
@@ -18,8 +30,6 @@ password.send_keys('lina000)')
 
 login=browser.find_element_by_id('loginButton')
 login.click()
-
-
 
 #click View Full asset paths check box
 checkbox=browser.find_element_by_name('viewFullPathMode')
