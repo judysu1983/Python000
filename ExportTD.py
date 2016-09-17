@@ -4,6 +4,11 @@
 
 
 from selenium import webdriver
+import pyautogui,time,os
+#check if the download file with same name already exists and empty the unzip to folder
+if os.path.exists("C:\\Users\\sujudy\\Downloads\\glossary_grid_TAM SOA_FBA TD_UTF8.zip"):
+    os.remove("C:\\Users\\sujudy\\Downloads\\glossary_grid_TAM SOA_FBA TD_UTF8.zip")
+    
 
 #download TD: TAM SOA/FBA TD
 browser = webdriver.Firefox()
@@ -17,10 +22,15 @@ password.send_keys('lina000)')
 login=browser.find_element_by_id('loginButton')
 login.click()
 
-
+#click download button on page
 elem = browser.find_element_by_id('__wsDialog_button_export')
 elem.click()
 
+time.sleep(3)
+pyautogui.hotkey('alt', 's')
+time.sleep(1)
+pyautogui.press('enter')
+time.sleep(5)
 
 #Export TMX Entries from TM Database:  TAM TM_Single XPR SOA/FBA Unreviewed
 #browser = webdriver.Firefox()

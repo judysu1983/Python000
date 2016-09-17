@@ -16,11 +16,14 @@ else:
     print("Ctrl+R then input ExportTarget <000000>")
 #open by projectID
 
+
+
 browser = webdriver.Firefox()
 baseURL="http://worldserver9.amazon.com/ws/assignments_tasks?&token=1416441266&project="
 projectID=userinputID
 url=baseURL+projectID
 browser.get(url)
+
 #login
 username=browser.find_element_by_id('username')
 username.send_keys('sujudy')
@@ -64,12 +67,22 @@ str3=str2.replace(")","%29")
 str4=str3.replace(" ","+")
 str5=str4.replace("%2FProjects%2F","%2FProjects&aisSP=%2F")
 
-
+#str5 is that path format required by WS
 downloadURL="http://worldserver9.amazon.com/ws/download_assets?&aisCF="+str5+"&token=937829789"
 print(downloadURL)
 
 #open project group download page by webdriver
 browser.get(downloadURL)
+#login again:
+username=browser.find_element_by_id('username')
+username.send_keys('sujudy')
+
+password=browser.find_element_by_id('password')
+password.send_keys('lina000)')
+
+login=browser.find_element_by_id('loginButton')
+login.click()
+
 downloadButton=browser.find_element_by_id('__wsDialog_button_download')
 downloadButton.click()
 
