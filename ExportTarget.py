@@ -55,10 +55,19 @@ assetRegex=re.compile(r'''
 
 ''', re.VERBOSE)
 
+foldernameRegex=re.compile(r'''
+/\d{6}.*?/
+''', re.VERBOSE)
+foldername=foldernameRegex.findall(asset.text)
+
+foldernamestr=''.join(foldername) #convert list to string
+foldernamestr=foldernamestr.strip('/')
+print(foldernamestr)
+
 PartialDownloadPath = assetRegex.findall(asset.text)
 #convert list to string
 PartialDownloadPathStr=''.join(PartialDownloadPath)
-print(PartialDownloadPathStr)
+#print(PartialDownloadPathStr)
 #partialdownloadURL
 
 str1=PartialDownloadPathStr.replace("/","%2F")
@@ -73,18 +82,29 @@ print(downloadURL)
 
 #open project group download page by webdriver
 browser.get(downloadURL)
+
 #login again:
-username=browser.find_element_by_id('username')
-username.send_keys('sujudy')
-
-password=browser.find_element_by_id('password')
-password.send_keys('lina000)')
-
-login=browser.find_element_by_id('loginButton')
-login.click()
-
+login()
+#click download button
 downloadButton=browser.find_element_by_id('__wsDialog_button_download')
 downloadButton.click()
+time.sleep(3)
+
+#press Save file and OK on the pop up window
+pyautogui.hotkey('alt', 's')
+time.sleep(1)
+pyautogui.press('enter')
+time.sleep(2)
+#unzip the download file to C:\7z\unzip
+os.system(r"C:\7z\7z e C:\Users\sujudy\Downloads\assets.zip -oC:\7z\unzip -spf -aos")
+browser.quit()
+
+#rename the folder from project groupID to projectID
+if os.path.exists(os.path.join('C:\\7z\\unzip',foldernamestr)):
+    #print("Folder found, rename it.")
+    newname1=projectID+' of '+foldernamestr
+    os.rename(os.path.join('C:\\7z\\unzip',foldernamestr),os.path.join('C:\\7z\\unzip',newname1))
+
 
 
 
