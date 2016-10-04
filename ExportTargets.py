@@ -54,7 +54,7 @@ def exporttarget(projectID):
         checkbox.click()
     #---print(checkbox.is_selected())
 
-    asset=browser.find_element_by_partial_link_text('samples')
+    asset=browser.find_element_by_partial_link_text('samples') #samples is the root folder name of ocelot projects
     filepath=asset.text
     #print(asset.text)
 
@@ -75,8 +75,9 @@ def exporttarget(projectID):
     foldername=foldernameRegex.findall(asset.text)
     
     foldernamestr=''.join(foldername) #convert list to string
-    foldernamestr=foldernamestr.strip('/')
-    print(foldernamestr)
+    foldernamestr=foldernamestr.split('/')
+    downloadFolder=foldernamestr[1]
+    #print(downloadFolder)
     
     PartialDownloadPath = assetRegex.findall(asset.text)
     #convert list to string
@@ -92,7 +93,8 @@ def exporttarget(projectID):
 
     #str5 is that path format required by WS
     downloadURL="http://worldserver9.amazon.com/ws/download_assets?&aisCF="+str5+"&token=937829789"
-    print(downloadURL)
+    print('Downloading '+projectID+'\n'+downloadURL+'\n')
+    
 
     #open project group download page by webdriver
     browser.get(downloadURL)
@@ -114,10 +116,10 @@ def exporttarget(projectID):
     browser.quit()
 
     #rename the folder from project groupID to projectID
-    if os.path.exists(os.path.join('C:\\7z\\unzip',foldernamestr)):
+    if os.path.exists(os.path.join('C:\\7z\\unzip',downloadFolder)):
         #print("Folder found, rename it.")
-        newname1=projectID+' of '+foldernamestr
-        os.rename(os.path.join('C:\\7z\\unzip',foldernamestr),os.path.join('C:\\7z\\unzip',newname1))
+        newname1=projectID+'#'+downloadFolder
+        os.rename(os.path.join('C:\\7z\\unzip',downloadFolder),os.path.join('C:\\7z\\unzip',newname1))
 
 PJlist=open('C:\\Python27\\ExportTargets.txt')
 projectIDs=PJlist.readlines()
