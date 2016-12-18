@@ -12,7 +12,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
-def completeproject(ID):
+def Reviewcheck(ID):
     browser = webdriver.Firefox()
 
     projecturl='http://worldserver9.amazon.com/ws/assignments_tasks?&token=1383336796&project='+ID
@@ -39,28 +39,21 @@ def completeproject(ID):
 
     try:
         reviewlink=browser.find_element_by_link_text('Review')
+        print(ID+'\t Ready for Review')
+        browser.quit()
 
-        checkbox=browser.find_element_by_name('checkAllBox')
-        if not checkbox.is_selected():
-            checkbox.click()
-        # find complete button    
-        CompleteButton=browser.find_element_by_css_selector('body > form:nth-child(1) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > table:nth-child(18) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(9) > a:nth-child(1)')
-        CompleteButton.click()
-        time.sleep(1)
-        #click the OK button without choosing TM to update
-        pyautogui.click(72,552)
-        time.sleep(2)
+
             
     except NoSuchElementException, e:
-        print('Project '+ID+' Tasks are not in Review step')
+        print('pass')
         browser.quit()
     
    
-PJlist=open('C:\\Python27\\CompletePJs_list.txt')
+PJlist=open('C:\\Python27\\CheckifInReviewstep.txt')
 projectIDs=PJlist.readlines()
 for p in projectIDs:
     p=p.strip()
-    completeproject(p)
+    Reviewcheck(p)
     
 
 

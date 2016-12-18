@@ -1,6 +1,6 @@
-import smtplib, socket, sys, getpass
-smtpserver=smtplib.SMTP("smtp.gmail.com",25)
-smtpserver.ehlo()
-smtpserver.starttls()
-smtpserver.ehlo()
-print("yes")
+import csv
+with open('D:\\test\\626027EN-PTBR_MT_Pilot_scope_info_pt_BR.csv','r') as f:
+    r=csv.reader(f,delimiter=',')
+    for row in r:
+        if row[1] ==' Total':
+            print(row[1]+','+row[2]+','+row[8])

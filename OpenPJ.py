@@ -11,4 +11,4 @@ if len(sys.argv) > 1:
 else:
     ID = pyperclip.paste()
 #http://worldserver9.amazon.com/ws/assignments_tasks?&token=1383336796&project=548699
-webbrowser.open('http://worldserver9.amazon.com/ws/assignments_tasks?&token=1058847079&project='+ID)
+webbrowser.open('http://worldserver9.amazon.com/ws/assignments_tasks?&token=658111049&project='+ID)

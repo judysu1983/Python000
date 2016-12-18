@@ -29,7 +29,7 @@ username=browser.find_element_by_id('username')
 username.send_keys('sujudy')
 
 password=browser.find_element_by_id('password')
-password.send_keys('lina000)')
+password.send_keys('lina88*)')
 
 login=browser.find_element_by_id('loginButton')
 login.click()
