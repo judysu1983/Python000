@@ -12,8 +12,9 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
+browser = webdriver.Firefox()
 def Reviewcheck(ID):
-    browser = webdriver.Firefox()
+
 
     projecturl='http://worldserver9.amazon.com/ws/assignments_tasks?&token=1383336796&project='+ID
 
@@ -40,13 +41,13 @@ def Reviewcheck(ID):
     try:
         reviewlink=browser.find_element_by_link_text('Review')
         print(ID+'\t Ready for Review')
-        browser.quit()
+
 
 
             
     except NoSuchElementException, e:
         print('pass')
-        browser.quit()
+
     
    
 PJlist=open('C:\\Python27\\CheckifInReviewstep.txt')

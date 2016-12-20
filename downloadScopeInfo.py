@@ -1,6 +1,7 @@
-import webbrowser, sys, pyperclip, time, pyautogui
+import webbrowser, sys, time, pyautogui
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 import fnmatch, os, csv, shutil, logging
 
 #delete any scope_Info csv file before the downloading
@@ -9,26 +10,24 @@ for csv in os.listdir('.'):
     if fnmatch.fnmatch(csv,'*_scope_info_*.csv'):
         os.remove(csv)
 #delete any csv in the working folder
-os.chdir('D:\\csvScope')
+os.chdir('C:\\csvScope')
 for csv in os.listdir('.'):
     if fnmatch.fnmatch(csv,'*_scope_info_*.csv'):
         os.remove(csv)
 os.chdir('C:\\Python27')
 
+browser = webdriver.Firefox()
 def downloadScopeInfo(ID):
-    browser = webdriver.Firefox()
-
+    
     projecturl='http://worldserver9.amazon.com/ws/assignments_project_info_scope?&project='+ID
-
     browser.get(projecturl)
 
-    #login
-    login=open('C:\\Python27\\login.txt')
-    loginname=login.readlines()
-    name, pw=loginname
-    name=name.strip()
-    pw=pw.strip()
-    login.close()   
+    #login, take username and password from windows+Run input
+    sys.argv
+    if len(sys.argv) > 2:
+        name = sys.argv[1]
+        pw = sys.argv[2]
+    
     username=browser.find_element_by_id('username')
     username.send_keys(name)
 
@@ -38,7 +37,7 @@ def downloadScopeInfo(ID):
     login=browser.find_element_by_id('loginButton')
     login.click()
     time.sleep(1)
-    #check if the tasks are in Review step and only complete the task in Reivew step
+    
     
     savecsvButton=browser.find_element_by_css_selector('a.button:nth-child(1)')
     savecsvButton.click()
@@ -47,7 +46,7 @@ def downloadScopeInfo(ID):
     time.sleep(1)
     pyautogui.press('enter')
     time.sleep(2)
-    browser.quit()
+    #browser.quit()
 
     #find the csv file and add project ID to the file name
     #C:\Users\sujudy\Downloads\EN-PTBR_MT_Pilot_scope_info_pt_BR.csv
@@ -55,10 +54,10 @@ def downloadScopeInfo(ID):
     for csvscope in os.listdir('.'):
         if fnmatch.fnmatch(csvscope,'*_scope_info_*.csv'):
             #move it to another folder
-            shutil.move('C:\\Users\\sujudy\\Downloads\\'+csvscope,'D:\\csvScope\\'+ID+'_'+csvscope)
-            print('D:\\csvScope\\'+ID+csvscope)
+            shutil.move('C:\\Users\\sujudy\\Downloads\\'+csvscope,'C:\\csvScope\\'+ID+'_'+csvscope)
+            print('C:\\csvScope\\'+ID+'_'+csvscope)
             import csv
-            with open('D:\\csvScope\\'+ID+csvscope,'r') as f:
+            with open('C:\\csvScope\\'+ID+'_'+csvscope,'r') as f:
                 r=csv.reader(f,delimiter=',')
                 for row in r:
                     if row[1] ==' Total':
@@ -72,5 +71,5 @@ for p in projectIDs:
     p=p.strip()
     downloadScopeInfo(p)
 
-
+browser.quit()
 
