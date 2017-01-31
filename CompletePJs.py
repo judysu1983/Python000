@@ -11,9 +11,9 @@ import webbrowser, sys, pyperclip, time, pyautogui
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-
+browser = webdriver.Firefox()
 def completeproject(ID):
-    browser = webdriver.Firefox()
+    
 
     projecturl='http://worldserver9.amazon.com/ws/assignments_tasks?&token=1383336796&project='+ID
 
@@ -53,7 +53,7 @@ def completeproject(ID):
             
     except NoSuchElementException, e:
         print('Project '+ID+' Tasks are not in Review step')
-        browser.quit()
+        #browser.quit()
     
    
 PJlist=open('C:\\Python27\\CompletePJs_list.txt')
